@@ -1,4 +1,6 @@
-﻿using CarFinder.Models;
+﻿using Bing;
+using CarFinder.Models;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -60,6 +62,59 @@ namespace CarFinder.Controllers
         public async Task<List<string>> GetAllYears()
         {
             return await db.GetAllYears();
+        }
+
+        [Route("GetCar")]
+        public async Task<IHttpActionResult> GetCar( int id)
+        {
+            var car = db.Cars.Find(id);
+            if(car == null)
+            {
+                return await Task.FromResult(NotFound());
+            }
+
+            HttpResponseMessage response;
+
+            var client = new BingSearchContainer(new Uri("https://api.datamarket.azure.com/Bing/search/"));
+            client.Credentials = new NetworkCredential("accountKey", "p378hNjOm0HKvheOJd/KFybFEM8wmO0orgleQPGPz9s");
+            var marketData = client.Composite(
+                "image",
+                $"{car.model_year} {car.make} {car.model_name} {car.model_trim}",
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null
+                ).Execute();
+
+            var imageUrl = marketData?.FirstOrDefault()?.Image?.FirstOrDefault()?.MediaUrl;
+
+            dynamic recalls;
+
+            using( var httpClient = new HttpClient())
+            {
+                httpClient.BaseAddress = new Uri("http://www.nhtsa.gov");
+
+                try
+                {
+                    response = await httpClient.GetAsync($"webapi/api/Recalls/vehicle/modelyear/{car.model_year}/make/{car.make}/model/{car.model_name}?format=json");
+                    recalls = JsonConvert.DeserializeObject(await response.Content.ReadAsStringAsync());
+                }
+                catch (Exception e)
+                {
+                    return InternalServerError(e);
+                }
+            }
+
+            return Ok(new { car, imageUrl, recalls });
         }
     }
 }
