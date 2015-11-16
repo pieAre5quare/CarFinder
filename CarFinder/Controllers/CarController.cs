@@ -15,13 +15,24 @@ namespace CarFinder.Controllers
     public class CarController : ApiController
     {
         private ApplicationDbContext db = new ApplicationDbContext();
-
+        /// <summary>
+        /// Gets all cars on the given year.
+        /// </summary>
+        /// <param name="year">Year to look up cars by</param>
+        /// <returns>A list of all cars in the database made on the given year</returns>
         [Route("GetCarsByYear")]
         public async Task<List<Car>> GetCarsByYear(string year)
         {
             return await db.GetCarsByYear(year);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="year"></param>
+        /// <param name="make"></param>
+        /// <param name="model"></param>
+        /// <returns></returns>
         [Route("GetCarsByYearMakeModel")]
         public async Task<List<Car>> GetCarsByYearMakeModel(string year, string make, string model)
         {

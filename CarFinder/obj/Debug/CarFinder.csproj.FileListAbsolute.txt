@@ -75,3 +75,4 @@ C:\Users\pieAre5quare\Documents\Visual Studio 2015\Projects\CarFinder\CarFinder\
 C:\Users\pieAre5quare\Documents\Visual Studio 2015\Projects\CarFinder\CarFinder\obj\Debug\CarFinder.csprojResolveAssemblyReference.cache
 C:\Users\pieAre5quare\Documents\Visual Studio 2015\Projects\CarFinder\CarFinder\obj\Debug\CarFinder.dll
 C:\Users\pieAre5quare\Documents\Visual Studio 2015\Projects\CarFinder\CarFinder\obj\Debug\CarFinder.pdb
+C:\Users\pieAre5quare\Documents\Visual Studio 2015\Projects\CarFinder\CarFinder\bin\XmlDocument.xml
