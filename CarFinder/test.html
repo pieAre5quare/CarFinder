@@ -1,0 +1,53 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+	<meta charset="utf-8" />
+    <link href="Content/bootstrap.min.css" rel="stylesheet" />
+</head>
+<body ng-app="car-finder">
+    <div ng-controller="carCtrl as ctrl" ng-cloak>
+        <h4 class="center-block">Car Lister</h4>
+        <div class="jumbotron">
+            <div class="row">
+                <div class="col-md-12">
+                    <label>
+                        Year:
+                        <select ng-model="ctrl.selected.year" 
+                                ng-options="year for year in ctrl.options.years"
+                                ng-change="ctrl.getMakes()"></select>
+                    </label><br />
+                    <label>
+                        Make:
+                        <select ng-if="ctrl.selected.year"
+                                ng-model="ctrl.selected.make" 
+                                ng-options="make for make in ctrl.options.makes"
+                                ng-change="ctrl.getModels()"></select>
+                    </label><br />
+                    <label>
+                        Model:
+                        <select ng-if="ctrl.selected.make" 
+                                ng-model="ctrl.selected.model" 
+                                ng-options="model for model in ctrl.options.models"
+                                ng-change="ctrl.getTrims()"></select>
+                    </label><br />
+
+                    <label>
+                        Trim:
+                        <select ng-if="ctrl.selected.model" 
+                                ng-model="ctrl.selected.trim" 
+                                ng-options="trim for trim in ctrl.options.trims"></select>
+                    </label><br />
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="/Scripts/jquery-1.10.2.min.js"></script>
+    <script src="/Scripts/angular.min.js"></script>
+    <script src="/App/app.js"></script>
+    <script src="/App/carCtrl.js"></script>
+    <script src="/App/testCarSvc.js"></script>
+</body>
+</html>
