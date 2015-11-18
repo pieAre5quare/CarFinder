@@ -4,6 +4,7 @@
     <title></title>
 	<meta charset="utf-8" />
     <link href="Content/bootstrap.min.css" rel="stylesheet" />
+    <link href="Content/trNgGrid.min.css" rel="stylesheet" />
 </head>
 <body ng-app="car-finder">
     <div ng-controller="carCtrl as ctrl" ng-cloak>
@@ -36,11 +37,23 @@
                         Trim:
                         <select ng-if="ctrl.selected.model" 
                                 ng-model="ctrl.selected.trim" 
-                                ng-options="trim for trim in ctrl.options.trims"></select>
+                                ng-options="trim for trim in ctrl.options.trims"
+                                ng-change="ctrl.getCars()"></select>
                     </label><br />
-                    <div ng-repeat="car in ctrl.cars">
-                        {{car}}
-                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <table tr-ng-grid="" items="ctrl.cars" fields="['model_year', 'make', 'model_name', 'model_trim']">
+                        <thead>
+                            <tr>
+                                <th field-name="model_year" display-name="Year" enable-filtering="false"></th>
+                                <th field-name="make" display-name="Make"></th>
+                                <th field-name="model_name" display-name="Model"></th>
+                                <th field-name="model_trim" display-name="Trim"></th>
+                            </tr>
+                        </thead>
+                    </table>
                 </div>
             </div>
         </div>
@@ -48,6 +61,7 @@
 
     <script src="/Scripts/jquery-1.10.2.min.js"></script>
     <script src="/Scripts/angular.min.js"></script>
+    <script src="Scripts/trNgGrid.min.js"></script>
     <script src="/App/app.js"></script>
     <script src="/App/carCtrl.js"></script>
     <script src="/App/carService.js"></script>

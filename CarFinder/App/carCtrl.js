@@ -28,7 +28,7 @@
           self.getYears = function () {
               carSvc.getYears().then(function (data) {
                   self.options.years = data;
-                  self.getCars(self.selected);
+                  //self.getCars(self.selected);
               })
           }
 
@@ -44,7 +44,7 @@
               carSvc.getMakes(self.selected).then(function (data) {
                   self.options.makes = data;
               })
-              self.getCars(self.selected);
+              //self.getCars(self.selected);
           }
 
           self.getModels = function () {
@@ -57,7 +57,7 @@
               carSvc.getModels(self.selected).then(function (data) {
                   self.options.models = data;
               })
-              self.getCars(self.selected);
+              //self.getCars(self.selected);
           }
 
           self.getTrims = function () {
