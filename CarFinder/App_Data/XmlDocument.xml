@@ -481,14 +481,14 @@
             </summary>
             <param name="documentPath">The physical path to XML document.</param>
         </member>
-        <member name="M:CarFinder.Controllers.CarController.GetCarsByYear(System.String)">
+        <member name="M:CarFinder.Controllers.CarController.GetCarsByYear(CarFinder.Controllers.CarController.ControllerParams)">
             <summary>
             Gets all cars on the given year.
             </summary>
             <param name="year">Year to look up cars by</param>
             <returns>A list of all cars in the database made on the given year</returns>
         </member>
-        <member name="M:CarFinder.Controllers.CarController.GetCarsByYearMakeModel(System.String,System.String,System.String)">
+        <member name="M:CarFinder.Controllers.CarController.GetCarsByYearMakeModel(CarFinder.Controllers.CarController.ControllerParams)">
             <summary>
             
             </summary>

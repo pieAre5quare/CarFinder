@@ -38,7 +38,9 @@
                                 ng-model="ctrl.selected.trim" 
                                 ng-options="trim for trim in ctrl.options.trims"></select>
                     </label><br />
-                    
+                    <div ng-repeat="car in ctrl.cars">
+                        {{car}}
+                    </div>
                 </div>
             </div>
         </div>
@@ -48,6 +50,6 @@
     <script src="/Scripts/angular.min.js"></script>
     <script src="/App/app.js"></script>
     <script src="/App/carCtrl.js"></script>
-    <script src="/App/testCarSvc.js"></script>
+    <script src="/App/carService.js"></script>
 </body>
 </html>

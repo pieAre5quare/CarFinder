@@ -106,5 +106,23 @@ namespace CarFinder.Models
             return await this.Database
                 .SqlQuery<string>("GetYears").ToListAsync();
         }
+
+        public async Task<List<Car>> GetCars(string year, string make, string model, string trim, string filter, bool? paging, int? page, 
+                                            int? perPage, string sortcolumn, string sortdirection )
+        {
+            var yearParam = new SqlParameter("@year", year);
+            var makeParam = new SqlParameter("@make", make ?? "");
+            var modelParam = new SqlParameter("@model", model ?? "");
+            var trimParam = new SqlParameter("@trim", trim ?? "");
+            var filterParam = new SqlParameter("@filter", filter ?? "");
+            var pagingParam = new SqlParameter("@paging", paging ?? false);
+            var pageParam = new SqlParameter("@page", page ?? 1);
+            var perPageParam = new SqlParameter("@perPage", perPage ?? 50);
+            var sortcolumnParam = new SqlParameter("@sortcolumn", sortcolumn ?? "");
+            var sortdirectionParam = new SqlParameter("@sortdirection", sortdirection ?? "");
+
+            return await this.Database.SqlQuery<Car>("GetCars @year, @make, @model, @trim, @filter, @paging, @page, @perPage, @sortcolumn, @sortdirection",
+                                yearParam, makeParam, modelParam, trimParam, filterParam, pagingParam, pageParam, perPageParam, sortcolumnParam, sortdirectionParam).ToListAsync();
+        }
     }
 }

@@ -227,6 +227,7 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App\carService.js" />
     <Content Include="Areas\HelpPage\HelpPage.css" />
     <Content Include="Content\android-desktop.png" />
     <Content Include="Content\bootstrap.css" />

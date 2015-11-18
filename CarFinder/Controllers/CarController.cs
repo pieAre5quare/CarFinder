@@ -15,15 +15,37 @@ namespace CarFinder.Controllers
     public class CarController : ApiController
     {
         private ApplicationDbContext db = new ApplicationDbContext();
+
+        public class ControllerParams
+        {
+            public string year { get; set; }
+            public string make { get; set; }
+            public string model { get; set; }
+            public string trim { get; set; }
+            public string filter { get; set; }
+            public bool? paging { get; set; }
+            public int? page { get; set; }
+            public int? perPage { get; set; }
+            public string sortcolumn { get; set; }
+            public string sortdirection { get; set; }
+
+        }
+
+        public class IdParam
+        {
+            public int id { get; set; }
+        }
+
         /// <summary>
         /// Gets all cars on the given year.
         /// </summary>
         /// <param name="year">Year to look up cars by</param>
         /// <returns>A list of all cars in the database made on the given year</returns>
         [Route("GetCarsByYear")]
-        public async Task<List<Car>> GetCarsByYear(string year)
+        [HttpPost]
+        public async Task<List<Car>> GetCarsByYear(ControllerParams selected)
         {
-            return await db.GetCarsByYear(year);
+            return await db.GetCarsByYear(selected.year);
         }
 
         /// <summary>
@@ -34,51 +56,74 @@ namespace CarFinder.Controllers
         /// <param name="model"></param>
         /// <returns></returns>
         [Route("GetCarsByYearMakeModel")]
-        public async Task<List<Car>> GetCarsByYearMakeModel(string year, string make, string model)
+        [HttpPost]
+        public async Task<List<Car>> GetCarsByYearMakeModel(ControllerParams selected)
         {
-            return await db.GetCarsByYearMakeModel(year, make, model);
+            return await db.GetCarsByYearMakeModel(selected.year, selected.make, selected.model);
         }
 
         [Route("GetCarsByYearMakeModelTrim")]
-        public async Task<List<Car>> GetCarsByYearMakeModelTrim(string year, string make, string model, string trim)
+        [HttpPost]
+        public async Task<List<Car>> GetCarsByYearMakeModelTrim(ControllerParams selected)
         {
-            return await db.GetCarsByYearMakeModelTrim(year, make, model, trim);
+            return await db.GetCarsByYearMakeModelTrim(selected.year, selected.make, selected.model, selected.trim);
         }
 
         [Route("GetCarsByYearMake")]
-        public async Task<List<Car>> GetCarsByYearMake(string year, string make)
+        [HttpPost]
+        public async Task<List<Car>> GetCarsByYearMake(ControllerParams selected)
         {
-            return await db.GetCarsByYearMake(year, make);
+            return await db.GetCarsByYearMake(selected.year, selected.make);
         }
 
         [Route("GetMakeByYear")]
-        public async Task<List<string>> GetMakeByYear(string year)
+        [HttpPost]
+        public async Task<List<string>> GetMakeByYear(ControllerParams selected)
         {
-            return await db.GetMakeByYear(year);
+            return await db.GetMakeByYear(selected.year);
         }
 
         [Route("GetModelsByYearMake")]
-        public async Task<List<string>> GetModelsByYearMake(string year, string make)
+        [HttpPost]
+        public async Task<List<string>> GetModelsByYearMake(ControllerParams selected)
         {
-            return await db.GetModelsByYearMake(year, make);
+            return await db.GetModelsByYearMake(selected.year, selected.make);
         }
 
         [Route("GetTrimsByYearMakeModel")]
-        public async Task<List<string>> GetTrimsByYearMakeModel(string year, string make, string model)
+        [HttpPost]
+        public async Task<List<string>> GetTrimsByYearMakeModel(ControllerParams selected)
         {
-            return await db.GetTrimsByYearMakeModel(year, make, model);
+            return await db.GetTrimsByYearMakeModel(selected.year, selected.make, selected.model);
         }
 
         [Route("GetAllYears")]
+        [HttpPost]
         public async Task<List<string>> GetAllYears()
         {
             return await db.GetAllYears();
         }
 
-        [Route("GetCar")]
-        public async Task<IHttpActionResult> GetCar( int id)
+        [Route("GetCars")]
+        [HttpPost]
+        public async Task<List<Car>> GetCars(ControllerParams selected)
         {
-            var car = db.Cars.Find(id);
+            if (selected == null)
+            {
+                selected = new ControllerParams()
+                {
+                    year = "2000"
+                };
+            }
+            return await db.GetCars(selected.year, selected.make, selected.model, selected.trim, selected.filter, selected.paging, selected.page,
+                                            selected.perPage, selected.sortcolumn, selected.sortdirection);
+        }
+
+        [Route("GetCar")]
+        [HttpPost]
+        public async Task<IHttpActionResult> GetCar(IdParam paramId)
+        {
+            var car = db.Cars.Find(paramId.id);
             if(car == null)
             {
                 return await Task.FromResult(NotFound());
