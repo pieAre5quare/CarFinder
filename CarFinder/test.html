@@ -44,16 +44,46 @@
             </div>
             <div class="row">
                 <div class="col-md-12">
-                    <table tr-ng-grid="" items="ctrl.cars" fields="['model_year', 'make', 'model_name', 'model_trim']">
+                    <table tr-ng-grid="" 
+                           items="ctrl.cars" 
+                           fields="['model_year', 'make', 'model_name', 'model_trim']"
+                           total-items="ctrl.unpagedCarsCount"
+                           on-data-required="ctrl.getCars()"
+                           page-items="ctrl.selected.perPage"
+                           currentPage="ctrl.selected.page"
+                           filter-by="ctrl.selected.filter"
+                           order-by="ctrl.selected.sortColumn"
+                           order-by-reverse="ctrl.selected.sortByReverse">
                         <thead>
                             <tr>
                                 <th field-name="model_year" display-name="Year" enable-filtering="false"></th>
-                                <th field-name="make" display-name="Make"></th>
-                                <th field-name="model_name" display-name="Model"></th>
-                                <th field-name="model_trim" display-name="Trim"></th>
+                                <th field-name="make" display-name="Make" enable-filtering="false"></th>
+                                <th field-name="model_name" display-name="Model" enable-filtering="false"></th>
+                                <th field-name="model_trim" display-name="Trim" enable-filtering="false"></th>
+                                <th display-name="Action" enable-filtering="false" enable-sorting="false"></thdisplay-name="Trim">
                             </tr>
                         </thead>
+                        <tr>
+                            <td><button type="button" class="btn btn-default" ng-click="ctrl.open(gridItem.id)">View</button></td>
+                        </tr>
                     </table>
+
+                    <script type="text/ng-template" id="carModal.html">
+                        <div class="modal-header">
+                            <h3 class="modal-title">
+                                {{cm.car.Car.model_year}} {{cm.car.Car.make}} - {{cm.car.Car.model_name}} {{cm.car.Car.model_trim}}
+                                <button class="pull-right btn btn-default" ng-click="cm.cancel()">X</button>
+                            </h3>
+                        </div>
+                        <div class="modal-body">
+
+
+                        </div>
+                        <div class="modal-footer">
+                            <button class="btn btn-primary" ng-click="cm.ok()">OK</button>
+                            <button class="btn btn-warning" ng-click="cm.cancel()">Cancel</button>
+                        </div>
+                    </script>
                 </div>
             </div>
         </div>
@@ -61,6 +91,8 @@
 
     <script src="/Scripts/jquery-1.10.2.min.js"></script>
     <script src="/Scripts/angular.min.js"></script>
+    <script src="Scripts/angular-ui/ui-bootstrap.min.js"></script>
+    <script src="Scripts/angular-ui/ui-bootstrap-tpls.min.js"></script>
     <script src="Scripts/trNgGrid.min.js"></script>
     <script src="/App/app.js"></script>
     <script src="/App/carCtrl.js"></script>

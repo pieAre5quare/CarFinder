@@ -33,6 +33,19 @@
                 });
             }
 
+            f.getCarsCount = function (selected) {
+                return $http.post('api/Cars/GetCarsCount', selected).then(function (response) {
+                    return response.data;
+                });
+            }
+
+            f.getCar = function (id) {
+
+                var Id = { Id: id };
+                return $http.post('api/Cars/GetCar', Id).then(function (response) {
+                    return response.data;
+                });
+            }
 
 
             return f;

@@ -23,17 +23,17 @@ namespace CarFinder.Controllers
             public string model { get; set; }
             public string trim { get; set; }
             public string filter { get; set; }
-            public bool? paging { get; set; }
+            public bool paging { get; set; }
             public int? page { get; set; }
             public int? perPage { get; set; }
             public string sortcolumn { get; set; }
-            public string sortdirection { get; set; }
+            public bool sortByReverse { get; set; }
 
         }
 
         public class IdParam
         {
-            public int id { get; set; }
+            public int Id { get; set; }
         }
 
         /// <summary>
@@ -116,14 +116,21 @@ namespace CarFinder.Controllers
                 };
             }
             return await db.GetCars(selected.year, selected.make, selected.model, selected.trim, selected.filter, selected.paging, selected.page,
-                                            selected.perPage, selected.sortcolumn, selected.sortdirection);
+                                            selected.perPage, selected.sortcolumn, selected.sortByReverse);
+        }
+
+        [Route("GetCarsCount")]
+        [HttpPost]
+        public async Task<int> GetCarsCount(ControllerParams selected)
+        {
+            return await db.GetCarsCount(selected.year, selected.make, selected.model, selected.trim, selected.filter);
         }
 
         [Route("GetCar")]
         [HttpPost]
-        public async Task<IHttpActionResult> GetCar(IdParam paramId)
+        public async Task<IHttpActionResult> GetCar(IdParam id)
         {
-            var car = db.Cars.Find(paramId.id);
+            var car = db.Cars.Find(id.Id);
             if(car == null)
             {
                 return await Task.FromResult(NotFound());

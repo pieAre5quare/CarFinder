@@ -1,7 +1,7 @@
 ﻿(function () {
     angular.module('car-finder')
 
-      .controller('carCtrl', ['carService', function (carSvc) {
+      .controller('carCtrl', ['carService', '$q', '$modal', function (carSvc, $q, $modal) {
           var self = this;
           self.selected = {
               year: '',
@@ -9,11 +9,11 @@
               model: '',
               trim: '',
               filter: '',
-              paging: '',
-              page: '',
-              perPage: '',
-              sortcolumn: '',
-              sortdirection: ''
+              paging: 'true',
+              page: '0',
+              perPage: '10',
+              sortcolumn: 'id',
+              sortByReverse: 'true'
           }
 
           self.options = {
@@ -25,10 +25,17 @@
 
           self.cars = [];
 
+          self.modalCar = '';
+
+          self.unpagedCarsCount = 0;
+
+          self.loading = false;
+
           self.getYears = function () {
               carSvc.getYears().then(function (data) {
                   self.options.years = data;
-                  //self.getCars(self.selected);
+                  self.getCars();
+                  self.getCarsCount();
               })
           }
 
@@ -40,11 +47,11 @@
               self.options.trims = '';
               self.selected.trim = '';
               self.cars = [];
-              
+
               carSvc.getMakes(self.selected).then(function (data) {
                   self.options.makes = data;
               })
-              //self.getCars(self.selected);
+              self.getCars();
           }
 
           self.getModels = function () {
@@ -57,7 +64,7 @@
               carSvc.getModels(self.selected).then(function (data) {
                   self.options.models = data;
               })
-              //self.getCars(self.selected);
+              self.getCars();
           }
 
           self.getTrims = function () {
@@ -68,17 +75,67 @@
               carSvc.getTrims(self.selected).then(function (data) {
                   self.options.trims = data;
               })
-              self.getCars(self.selected);
+              self.getCars();
           }
 
           self.getCars = function () {
               self.cars = [];
-              carSvc.getCars(self.selected)
-                  .then(function (data) {
-                      self.cars = data;
-                  })
+              if (!self.loading) {
+                  self.loading = true;
+                  var s = angular.copy(self.selected);
+                  s.page += 1;
+                  $q.all([carSvc.getCars(s), carSvc.getCarsCount(s)])
+                    .then(function (data) {
+                        self.cars = data[0];
+                        self.unpagedCarsCount = data[1];
+                        self.loading = false;
+                    })
+              }
           }
 
+          self.getCarsCount = function () {
+              carSvc.getCarsCount(self.selected).then(function (data) {
+                  self.unpagedCarsCount = data;
+              })
+          }
+
+          self.getCar = function () {
+              carSvc.getCar(id).then(function (data) {
+                  self.modalCar = data;
+              })
+          }
+
+          self.open = function (id) {
+              var modalInstance = $modal.open({
+                  animation: true,
+                  templateUrl: 'carModal.html',
+                  controller: 'carModalCtrl as cm',
+                  size: 'large',
+                  resolve: {
+                      car: function () {
+                          return carSvc.getCar(id);
+                      }
+                  }
+
+
+              });
+          };
+
           self.getYears(self.selected);
-      }])
+      }]);
+
+    angular.module('car-finder').controller('carModalCtrl', function ($modalInstance, car) {
+
+        var scope = this;
+
+        scope.car = car;
+
+        scope.ok = function () {
+            $modalInstance.close();
+        };
+
+        scope.cancel = function () {
+            $modalInstance.dismiss();
+        };
+    })
 })();
