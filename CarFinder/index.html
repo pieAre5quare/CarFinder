@@ -13,14 +13,8 @@
     <link href="Content/grayscale.css" rel="stylesheet" />
     <!-- Custom Fonts -->
     <link href="Content/font-awesome.min.css" rel="stylesheet" />
-    <link href="http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" rel="stylesheet" type="text/css">
-    <link href="http://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
+    <link href="Content/overwrite.css" rel="stylesheet" />
+
 </head>
 <body id="page-top" data-spy="scroll" data-target=".navbar-fixed-top">
     <!-- Navigation -->
@@ -76,10 +70,110 @@
     <section id="about" class="container content-section text-center">
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2">
-                <h2>About Grayscale</h2>
-                <p>Grayscale is a free Bootstrap 3 theme created by Start Bootstrap. It can be yours right now, simply download the template on <a href="http://startbootstrap.com/template-overviews/grayscale/">the preview page</a>. The theme is open source, and you can use it for any purpose, personal or commercial.</p>
-                <p>This theme features stock photos by <a href="http://gratisography.com/">Gratisography</a> along with a custom Google Maps skin courtesy of <a href="http://snazzymaps.com/">Snazzy Maps</a>.</p>
-                <p>Grayscale includes full HTML, CSS, and custom JavaScript files along with LESS files for easy customization.</p>
+                <div ng-app="car-finder">
+                    <div ng-controller="carCtrl as ctrl" ng-cloak>
+                        <h4 class="center-block">Car Lister</h4>
+                        
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <label>
+                                        Year:
+                                        <select ng-model="ctrl.selected.year"
+                                                ng-options="year for year in ctrl.options.years"
+                                                ng-change="ctrl.getMakes()"></select>
+                                    </label>
+                                    <label>
+                                        Make:
+                                        <select ng-model="ctrl.selected.make"
+                                                ng-options="make for make in ctrl.options.makes"
+                                                ng-change="ctrl.getModels()"></select>
+                                    </label>
+                                    <label>
+                                        Model:
+                                        <select ng-model="ctrl.selected.model"
+                                                ng-options="model for model in ctrl.options.models"
+                                                ng-change="ctrl.getTrims()"></select>
+                                    </label>
+
+                                    <label>
+                                        Trim:
+                                        <select ng-model="ctrl.selected.trim"
+                                                ng-options="trim for trim in ctrl.options.trims"
+                                                ng-change="ctrl.getCars()"></select>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <table tr-ng-grid=""
+                                           items="ctrl.cars"
+                                           fields="['model_year', 'make', 'model_name', 'model_trim']"
+                                           total-items="ctrl.unpagedCarsCount"
+                                           on-data-required="ctrl.getCars()"
+                                           page-items="ctrl.selected.perPage"
+                                           currentPage="ctrl.selected.page"
+                                           filter-by="ctrl.selected.filter"
+                                           order-by="ctrl.selected.sortColumn"
+                                           order-by-reverse="ctrl.selected.sortByReverse">
+                                        <thead>
+                                            <tr>
+                                                <th field-name="model_year" display-name="Year" enable-filtering="false"></th>
+                                                <th field-name="make" display-name="Make" enable-filtering="false"></th>
+                                                <th field-name="model_name" display-name="Model" enable-filtering="false"></th>
+                                                <th field-name="model_trim" display-name="Trim" enable-filtering="false"></th>
+                                                <th display-name="Action" enable-filtering="false" enable-sorting="false"></th="Trim">
+                                            </tr>
+                                        </thead>
+                                        <tr>
+                                            <td><button type="button" class="btn btn-warning" ng-click="ctrl.open(gridItem.id)">View</button></td>
+                                        </tr>
+                                    </table>
+
+                                    <script type="text/ng-template" id="carModal.html">
+                                        <div class="modal-body">
+                                            <img src="{{cm.car.imageUrl}}" class="modal-img" />
+                                            <hr />
+                                            <h3 class="modal-white">{{cm.car.car.model_year}} {{cm.car.car.make}} {{cm.car.car.model_name}}</h3>
+                                            <uib-tabset justified="true">
+                                                <uib-tab heading="Details">
+                                                    <h4 class="modal-headings">Trim:</h4><br />
+                                                    <div class="modal-white">{{cm.car.car.model_trim}}</div><br />
+                                                    <h4 class="modal-headings">Body Style:</h4><br /> 
+                                                    <div class="modal-white">{{cm.car.car.body_style}}</div><br />
+                                                    <h4 class="modal-headings">Engine Fuel:</h4><br /> 
+                                                    <div class="modal-white">{{cm.car.car.engine_fuel}}</div><br />
+                                                    <h4 class="modal-headings">Transmission:</h4><br />
+                                                    <div class="modal-white">{{cm.car.car.transmission_type}}</div><br />
+                                                    <h4 class="modal-headings">Drive Type:</h4><br /> 
+                                                    <div class="modal-white">{{cm.car.car.drive_type}}</div><br />
+                                                </uib-tab>
+                                                <uib-tab heading="Recalls">
+                                                    <uib-accordion ng-repeat="result in cm.car.recalls.Results">
+                                                        <uib-accordion-group heading="{{result.Component}}" class="accordion">
+                                                            Summary:<br />
+                                                            {{result.Summary}}<br /><hr />
+                                                            Consequence:<br />
+                                                            {{result.Conequence}}<br /><hr />
+                                                            Remedy:<br />
+                                                            {{result.Remedy}}<br /><hr />
+                                                            Notes:<br />
+                                                            {{result.Notes}}<br /><hr />
+                                                            Manufacturer: {{result.Manufacturer}}<br />
+                                                            NHTSA Campaign Number: {{result.NHTSACampaignNumber}}<br />
+                                                            Report Recieved Date: {{resultReportReceivedDate}}
+                                                        </uib-accordion-group>
+                                                    </uib-accordion>
+                                                </uib-tab>
+                                            </uib-tabset>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button class="btn btn-primary" ng-click="cm.ok()">Close</button>
+                                        </div>
+                                    </script>
+                                </div>
+                            </div>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
@@ -118,8 +212,6 @@
             </div>
         </div>
     </section>
-    <!-- Map Section -->
-    <div id="map"></div>
     <!-- Footer -->
     <footer>
         <div class="container text-center">
@@ -132,9 +224,17 @@
     <script src="Scripts/bootstrap.min.js"></script>
     <!-- Plugin JavaScript -->
     <script src="Scripts/jquery.easing.min.js"></script>
-    <!-- Google Maps API Key - Use your own API key to enable the map feature. More information on the Google Maps API can be found at https://developers.google.com/maps/ -->
-    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCRngKslUGJTlibkQ3FkfTxj3Xss1UlZDA&sensor=false"></script>
     <!-- Custom Theme JavaScript -->
     <script src="Scripts/grayscale.js"></script>
+    <!-- app stuff-->
+    
+    <script src="/Scripts/angular.min.js"></script>
+    <script src="Scripts/angular-ui/ui-bootstrap.min.js"></script>
+    <script src="Scripts/angular-ui/ui-bootstrap-tpls.min.js"></script>
+    <script src="Scripts/trNgGrid.min.js"></script>
+    <script src="/App/app.js"></script>
+    <script src="/App/carCtrl.js"></script>
+    <script src="/App/carService.js"></script>
+    
 </body>
 </html>

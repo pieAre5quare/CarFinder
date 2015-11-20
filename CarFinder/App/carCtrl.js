@@ -1,7 +1,7 @@
 ﻿(function () {
     angular.module('car-finder')
 
-      .controller('carCtrl', ['carService', '$q', '$modal', function (carSvc, $q, $modal) {
+      .controller('carCtrl', ['carService', '$q', '$uibModal', function (carSvc, $q, $modal) {
           var self = this;
           self.selected = {
               year: '',
@@ -124,18 +124,18 @@
           self.getYears(self.selected);
       }]);
 
-    angular.module('car-finder').controller('carModalCtrl', function ($modalInstance, car) {
+    angular.module('car-finder').controller('carModalCtrl', function ($uibModalInstance, car) {
 
         var scope = this;
 
         scope.car = car;
 
         scope.ok = function () {
-            $modalInstance.close();
+            $uibModalInstance.close();
         };
 
         scope.cancel = function () {
-            $modalInstance.dismiss();
+            $uibModalInstance.dismiss();
         };
     })
 })();

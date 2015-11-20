@@ -7,3 +7,39 @@
             margin-bottom: 40px;
             z-index: 900;
         }
+
+.modal-img {
+    max-width: 100%;
+}
+
+select {
+    width:130px;
+}
+
+body {
+    color: #F48D1E;
+}
+
+.modal-content {
+    background-color: #484C53;
+}
+
+.modal-white{
+    color:#ffffff;
+}
+
+.modal-headings {
+    margin:0;
+}
+
+.tab-pane {
+    margin-top:30px;
+}
+
+.accordion {
+    color:black;
+}
+
+hr {
+    background-color: #F48D1E;
+}

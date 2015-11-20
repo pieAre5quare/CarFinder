@@ -5,6 +5,7 @@
 	<meta charset="utf-8" />
     <link href="Content/bootstrap.min.css" rel="stylesheet" />
     <link href="Content/trNgGrid.min.css" rel="stylesheet" />
+    <link href="Content/overwrite.css" rel="stylesheet" />
 </head>
 <body ng-app="car-finder">
     <div ng-controller="carCtrl as ctrl" ng-cloak>
@@ -44,8 +45,8 @@
             </div>
             <div class="row">
                 <div class="col-md-12">
-                    <table tr-ng-grid="" 
-                           items="ctrl.cars" 
+                    <table tr-ng-grid=""
+                           items="ctrl.cars"
                            fields="['model_year', 'make', 'model_name', 'model_trim']"
                            total-items="ctrl.unpagedCarsCount"
                            on-data-required="ctrl.getCars()"
@@ -71,17 +72,42 @@
                     <script type="text/ng-template" id="carModal.html">
                         <div class="modal-header">
                             <h3 class="modal-title">
-                                {{cm.car.Car.model_year}} {{cm.car.Car.make}} - {{cm.car.Car.model_name}} {{cm.car.Car.model_trim}}
                                 <button class="pull-right btn btn-default" ng-click="cm.cancel()">X</button>
                             </h3>
                         </div>
                         <div class="modal-body">
-
-
+                            <img src="{{cm.car.imageUrl}}" class="modal-img"/>
+                            {{cm.car.car.model_year}} {{cm.car.car.make}} {{cm.car.car.model_name}}
+                            <hr />
+                            <uib-tabset>
+                                <uib-tab heading="Details">
+                                    Trim: {{cm.car.car.model_trim}}<br />
+                                    Body Style: {{cm.car.car.body_style}}<br />
+                                    Engine Fuel: {{cm.car.car.engine_fuel}}<br />
+                                    Transmission: {{cm.car.car.transmission_type}}<br />
+                                    Drive Type: {{cm.car.car.drive_type}}<br />
+                                </uib-tab>
+                                <uib-tab heading="Recalls">
+                                    <uib-accordion ng-repeat="result in cm.car.recalls.Results" >
+                                        <uib-accordion-group heading="{{result.Component}}">
+                                            Summary:<br />
+                                            {{result.Summary}}<br /><hr />
+                                            Consequence:<br />
+                                            {{result.Conequence}}<br /><hr />
+                                            Remedy:<br />
+                                            {{result.Remedy}}<br /><hr />
+                                            Notes:<br />
+                                            {{result.Notes}}<br /><hr />
+                                            Manufacturer: {{result.Manufacturer}}<br />
+                                            NHTSA Campaign Number: {{result.NHTSACampaignNumber}}<br />
+                                            Report Recieved Date: {{resultReportReceivedDate}}
+                                        </uib-accordion-group>
+                                    </uib-accordion>
+                                </uib-tab>
+                            </uib-tabset>
                         </div>
                         <div class="modal-footer">
-                            <button class="btn btn-primary" ng-click="cm.ok()">OK</button>
-                            <button class="btn btn-warning" ng-click="cm.cancel()">Cancel</button>
+                            <button class="btn btn-primary" ng-click="cm.ok()">Close</button>
                         </div>
                     </script>
                 </div>
@@ -97,5 +123,6 @@
     <script src="/App/app.js"></script>
     <script src="/App/carCtrl.js"></script>
     <script src="/App/carService.js"></script>
+
 </body>
 </html>
