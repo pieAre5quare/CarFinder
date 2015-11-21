@@ -43,3 +43,13 @@ body {
 hr {
     background-color: #F48D1E;
 }
+
+.intro-wrapper {
+    background: rgba(60,60,60,.6);
+    border-radius: 50px;
+}
+
+.orange {
+    color:#F48D1E !important;
+}
+
