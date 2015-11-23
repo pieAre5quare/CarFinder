@@ -228,9 +228,11 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="App\carService.js" />
+    <Content Include="XmlDocument.xml" />
     <Content Include="Areas\HelpPage\HelpPage.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\coder.png" />
     <Content Include="Content\downloads-bg.jpg" />
     <Content Include="Content\font-awesome.css" />
     <Content Include="Content\font-awesome.min.css" />
@@ -259,7 +261,6 @@
     <Content Include="Scripts\material.min.js" />
     <Content Include="App\testCarSvc.js" />
     <Content Include="Scripts\trNgGrid.min.js" />
-    <Content Include="test.html" />
     <Content Include="Scripts\angular-animate.js" />
     <Content Include="Scripts\angular-animate.min.js" />
     <Content Include="Scripts\angular-aria.js" />

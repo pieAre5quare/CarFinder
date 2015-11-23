@@ -481,21 +481,146 @@
             </summary>
             <param name="documentPath">The physical path to XML document.</param>
         </member>
+        <member name="T:CarFinder.Controllers.CarController.ControllerParams">
+            <summary>
+            Parameter object to recieve car filters.
+            </summary>
+        </member>
+        <member name="P:CarFinder.Controllers.CarController.ControllerParams.year">
+            <summary>
+            Year of car to search for.
+            </summary>
+        </member>
+        <member name="P:CarFinder.Controllers.CarController.ControllerParams.make">
+            <summary>
+            Make of car to search for.
+            </summary>
+        </member>
+        <member name="P:CarFinder.Controllers.CarController.ControllerParams.model">
+            <summary>
+            Model of car to search for.
+            </summary>
+        </member>
+        <member name="P:CarFinder.Controllers.CarController.ControllerParams.trim">
+            <summary>
+            Trim of car to search for.
+            </summary>
+        </member>
+        <member name="P:CarFinder.Controllers.CarController.ControllerParams.filter">
+            <summary>
+            Search string from user.
+            </summary>
+        </member>
+        <member name="P:CarFinder.Controllers.CarController.ControllerParams.paging">
+            <summary>
+            If server side paging should be enabled.
+            </summary>
+        </member>
+        <member name="P:CarFinder.Controllers.CarController.ControllerParams.page">
+            <summary>
+            Current page of cars.
+            </summary>
+        </member>
+        <member name="P:CarFinder.Controllers.CarController.ControllerParams.perPage">
+            <summary>
+            Number of cars to display on page.
+            </summary>
+        </member>
+        <member name="P:CarFinder.Controllers.CarController.ControllerParams.sortcolumn">
+            <summary>
+            Column to sort by.
+            </summary>
+        </member>
+        <member name="P:CarFinder.Controllers.CarController.ControllerParams.sortByReverse">
+            <summary>
+            If results should be ordered in reverse/descending.
+            </summary>
+        </member>
+        <member name="T:CarFinder.Controllers.CarController.IdParam">
+            <summary>
+            Wrapper object for the id, used when locating specific car.
+            </summary>
+        </member>
+        <member name="P:CarFinder.Controllers.CarController.IdParam.Id">
+            <summary>
+            Id of car to locate.
+            </summary>
+        </member>
         <member name="M:CarFinder.Controllers.CarController.GetCarsByYear(CarFinder.Controllers.CarController.ControllerParams)">
             <summary>
             Gets all cars on the given year.
             </summary>
-            <param name="year">Year to look up cars by</param>
-            <returns>A list of all cars in the database made on the given year</returns>
+            <param name="selected">Parameter Object; only year variable is used.</param>
+            <returns>A list of all cars in the database made on the given year.</returns>
         </member>
         <member name="M:CarFinder.Controllers.CarController.GetCarsByYearMakeModel(CarFinder.Controllers.CarController.ControllerParams)">
             <summary>
-            
+            Gets all cars with given year make and model.
             </summary>
-            <param name="year"></param>
-            <param name="make"></param>
-            <param name="model"></param>
-            <returns></returns>
+            <param name="selected">Parameter Object; only year, make, and model is used.</param>
+            <returns>A list of all cars in the database with given year make and model</returns>
+        </member>
+        <member name="M:CarFinder.Controllers.CarController.GetCarsByYearMakeModelTrim(CarFinder.Controllers.CarController.ControllerParams)">
+            <summary>
+            Gets all cars with given year make model and trim
+            </summary>
+            <param name="selected">Parameter Object; only year, make, model, and trim are used.</param>
+            <returns>A list of cars with given year, make, model, and trim</returns>
+        </member>
+        <member name="M:CarFinder.Controllers.CarController.GetCarsByYearMake(CarFinder.Controllers.CarController.ControllerParams)">
+            <summary>
+            Gets all cars with given year and make.
+            </summary>
+            <param name="selected">Parameter Object; only year and make are used.</param>
+            <returns>A list of all cars with given year and make.</returns>
+        </member>
+        <member name="M:CarFinder.Controllers.CarController.GetMakeByYear(CarFinder.Controllers.CarController.ControllerParams)">
+            <summary>
+            Gets a list of makes by given year.
+            </summary>
+            <param name="selected">Parameter Object; only year is used.</param>
+            <returns>A list of all makes on given year.</returns>
+        </member>
+        <member name="M:CarFinder.Controllers.CarController.GetModelsByYearMake(CarFinder.Controllers.CarController.ControllerParams)">
+            <summary>
+            Gets a list of models with given year and make.
+            </summary>
+            <param name="selected">Parameter Object; only year and make are used.</param>
+            <returns>A list of models with given year and make.</returns>
+        </member>
+        <member name="M:CarFinder.Controllers.CarController.GetTrimsByYearMakeModel(CarFinder.Controllers.CarController.ControllerParams)">
+            <summary>
+            Gets a list of trims with given year, make, and model.
+            </summary>
+            <param name="selected">Parameter Object; only year, make, and model are used.</param>
+            <returns>A list of trims with given year, make, and model.</returns>
+        </member>
+        <member name="M:CarFinder.Controllers.CarController.GetAllYears">
+            <summary>
+            Gets all available years in database.
+            </summary>
+            <returns>A list of all available years.</returns>
+        </member>
+        <member name="M:CarFinder.Controllers.CarController.GetCars(CarFinder.Controllers.CarController.ControllerParams)">
+            <summary>
+            Gets list of cars with given parameters, paging options can be set.
+            </summary>
+            <param name="selected">Parameter Object; 'ControllerParams' variables are used.</param>
+            <returns>A list of cars with given options.</returns>
+        </member>
+        <member name="M:CarFinder.Controllers.CarController.GetCarsCount(CarFinder.Controllers.CarController.ControllerParams)">
+            <summary>
+            Gets the number of cars with given year, make, model, trim, and search filter.
+            </summary>
+            <param name="selected">Paramter Object; only year, make, model, trim, filter are used.</param>
+            <returns>The integer count of cars that match given options.</returns>
+        </member>
+        <member name="M:CarFinder.Controllers.CarController.GetCar(CarFinder.Controllers.CarController.IdParam)">
+            <summary>
+            Get car with specified id.
+            </summary>
+            <param name="id">Id of car to be located.</param>
+            <returns>Car with specified id, url of car image, and recalls from NHTSA.</returns>
         </member>
         <member name="M:Bing.BingSearchContainer.Composite(System.String,System.String,System.String,System.String,System.String,System.String,System.Nullable{System.Double},System.Nullable{System.Double},System.String,System.String,System.String,System.String,System.String,System.String,System.String)">
             <summary>
