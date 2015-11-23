@@ -1,0 +1,69 @@
+﻿#view-source {
+            position: fixed;
+            display: block;
+            right: 0;
+            bottom: 0;
+            margin-right: 40px;
+            margin-bottom: 40px;
+            z-index: 900;
+        }
+
+.modal-img {
+    max-width: 100%;
+}
+
+select {
+    width:130px;
+}
+
+body {
+    color: #F48D1E;
+}
+
+.modal-content {
+    background-color: #484C53;
+}
+
+.modal-white{
+    color:#ffffff;
+}
+
+.modal-headings {
+    margin:0;
+}
+
+.tab-pane {
+    margin-top:30px;
+}
+
+.accordion {
+    color:black;
+}
+
+hr {
+    background-color: #F48D1E;
+}
+
+.intro-wrapper {
+    background: rgba(60,60,60,.6);
+    border-radius: 50px;
+}
+
+.orange {
+    color:#F48D1E !important;
+}
+
+#about {
+    padding-top: 150px;
+}
+
+#finder {
+    background-color: #2F3238;
+    border-radius: 10px;
+    padding-top: 100px;
+    padding-bottom: 100px;
+}
+
+#contact {
+    padding-top: 150px;
+}
